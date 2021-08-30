@@ -28,7 +28,9 @@ Here's the link to [Quick Actions](https://docs.gitlab.com/ee/user/project/quick
 
 # Templates
 To faciliate your planning and collaboration, issue and merge request templates have been provided for your use.  Go to files/.gitlab.  In that directory you'll find issue_templates and merge_requests_templates subfolders.  Revise the existing md files in those folder, make new ones or delete the existing ones to suit the needs of your project and team.  Then, when you create a new issue or merge request, you'll see the option on the Description dropdown.  
-               ![](https://drive.google.com/file/d/1p-eHZFYPxKsLuZtEsQPwZuvqpl1KB0bA/view?usp=sharing)
+
+
+![](https://drive.google.com/uc?export=view&id=1p-eHZFYPxKsLuZtEsQPwZuvqpl1KB0bA)
 
 
 
