@@ -1,10 +1,6 @@
 ## Purpose:
 [describe the purpose of this work here]
 
-### Estimtes and reminders:
-/estimate 32h 
-
-** Check out [Gitlab Quick Actions](https://docs.gitlab.com/ee/user/project/quick_actions.html) to improve your use of Gitlab
 
 ## Acceptance Criteria:
 
@@ -17,3 +13,5 @@
 - [ ] start defining some preliminary tasks...
 - [ ] during sprint planning...
 - [ ] follow your team's 'definition of done'
+
+_Add your work estimate here using the [Gitlab Quick Actions](https://docs.gitlab.com/ee/user/project/quick_actions.html)._
