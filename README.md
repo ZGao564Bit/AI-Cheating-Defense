@@ -3,7 +3,17 @@
 
 This begins your capstone development effort.  You will use GitLab as your primary repository for code and documentation.  In these early phases, you may not be delivering 'working software' but you will be delivering just enough documentation to show an understanding of the product in order to communicate a high-level understanding of the product, objectives, scope and quality requirements.  The issues and boards can also be used to collaborate on research.  For those of you on an R&D project, issues are a great way to track each research question.  The comments and team collaboration build a large body of knowledge during your efforts. 
 
-Regarding this readme.md file, ultimately you will update this page to reflect your project and assist anyone who has access to your repository.
+Regarding this readme.md file, update this page to reflect your project and assist anyone who has access to your repository.
+
+# Time Tracking
+
+**TIME TRACKING IS REQUIRED**.  I need to collect information to understand how much time is spent on capstone projects.  Therefore, please document your actual time spent using the [Quick Actions](https://docs.gitlab.com/ee/user/project/quick_actions.html). 
+
+| cmd | purpose |
+| ------ | ------ |
+| /estimate | in the issue description or comments, document the initial work estimate in days, hours, or minutes |
+| /spend | in the comments for the issue, indicate how much time you spend working at that time | 
+
 
 
 # Read these articles
@@ -15,16 +25,6 @@ Read the following articles to familiarize yourself with Gitlab and how you will
 * [Template Samples](https://gitlab.com/gitlab-org/gitlab/-/tree/master/.gitlab/issue_templates)
 
 
-# Time Tracking
-
-Time tracking is required.  It's very simple.  There are other useful actions like /done, /assign, /approve and /wip to name a few.
-
-| cmd | purpose |
-| ------ | ------ |
-| /estimate | in the issue description, document the initial work estimate in days, hours, or minutes |
-| /spend | in the comments for the issue, indicate how much time you spend working at that time | 
-
-Here's the link to [Quick Actions](https://docs.gitlab.com/ee/user/project/quick_actions.html).  
 
 # Templates
 To faciliate your planning and collaboration, issue and merge request templates have been provided for your use.  Go to files/.gitlab.  In that directory you'll find issue_templates and merge_requests_templates subfolders.  Revise the existing md files in those folder, make new ones or delete the existing ones to suit the needs of your project and team.  Then, when you create a new issue or merge request, you'll see the option on the Description dropdown.  
