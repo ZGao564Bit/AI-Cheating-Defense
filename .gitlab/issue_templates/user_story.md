@@ -6,8 +6,6 @@
 
 **IN ORDER TO ...** *value it adds*.
 
-## Estimtes and reminders:
-Use [Gitlab Quick Actions](https://docs.gitlab.com/12.10/ee/user/project/quick_actions.html) (/spend /due /weight, etc) to manage your estimates, time spent working, etc.
 
 ## Acceptance Criteria:
 
@@ -32,3 +30,6 @@ Use this section to help you define better user stories.
 - [ ] start defining some preliminary tasks...
 - [ ] during sprint planning...
 - [ ] follow your team's 'definition of done'
+
+
+_Add your work estimate using [Gitlab Quick Actions](https://docs.gitlab.com/12.10/ee/user/project/quick_actions.html)_
