@@ -1,47 +1,42 @@
-# CSE Capstone Project Template
+# Security and Privacy in ML Apps Project Charter
 
+**Project name** <br> Security and Privacy in ML Apps
 
-This begins your capstone development effort.  You will use GitLab as your primary repository for code and documentation.  In these early phases, you may not be delivering 'working software' but you will be delivering just enough documentation to show an understanding of the product in order to communicate a high-level understanding of the product, objectives, scope and quality requirements.  The issues and boards can also be used to collaborate on research.  For those of you on an R&D project, issues are a great way to track each research question.  The comments and team collaboration build a large body of knowledge during your efforts. 
+**Project client** <br> Xianglong Feng
 
-Regarding this readme.md file, update this page to reflect your project and assist anyone who has access to your repository.
+**Project manager** <br> Zichun Gao
 
-# Time Tracking
+**Developers** <br> Zichun Gao; Yue Sun; Chang Liu; Zhenyu Liao
 
-**TIME TRACKING IS REQUIRED**.  I need to collect information to understand how much time is spent on capstone projects.  Therefore, please document your actual time spent using the [Quick Actions](https://docs.gitlab.com/ee/user/project/quick_actions.html). 
+**Last revision date** <br> Sep. 24 2021
 
-| cmd | purpose |
-| ------ | ------ |
-| /estimate | in the issue description or comments, document the initial work estimate in days, hours, or minutes |
-| /spend | in the comments for the issue, indicate how much time you spend working at that time | 
+## Project Scope
 
+**Project purpose** <br />
+Providing a method or approach to detect and prevent AI cheating in shooting games. Let players have a fairer gaming experience.
 
+**Project objectives** <br>
+    1. A third-party component based on AI to automatically aim at and shoot other players in video games. <br>
+    2. A method to defend against AI by tracing and analyzing the actions of AI.
+    
+**Deliverables** <br>
+    1. An AI can play FPS games automatically according to machine learning to analyze all kinds of images.<br> 
+    2. Several methods to trace the ML cheating behaviors.
 
-# Read these articles
-Read the following articles to familiarize yourself with Gitlab and how you will be expected to use it during your project.
+**Creative requirements** <br>
+* **Functional requirements**<br> 
+1. The system is supposed to read the image on screen automatically.
+2. The system is supposed to identify the position of the aimed object.
+3. The system is supposed to send commands to drive the mouse and keyboard
+* **Non-Functional requirements**
+    1. The system is supposed to get 5 to 10 pictures per second.
+    2. The system can be used in all FPS types of games.
+    3. The user interface should be easy for users.
+* **Out of Scope**
+	    Defending cheatings in other kinds of battle games. 
 
-* [How to use GitLab for Agile Software Development](https://about.gitlab.com/blog/2018/03/05/gitlab-for-agile-software-development/). 
-* [How to Write a Beautiful and Meaningful README.md*](https://blog.bitsrc.io/how-to-write-beautiful-and-meaningful-readme-md-for-your-next-project-897045e3f991#:~:text=It's%20a%20set%20of%20useful,github%20below%20the%20project%20directory.) - buidling your ReadMe file 
-* [Always start with an issue](https://about.gitlab.com/blog/2016/03/03/start-with-an-issue/) - This article discusses issues and how to use them to collaborate.  Several issue and merge templates are provided in the .gitlab/issue_templates and .gitlab/merge_request_templates.  These should facilitate collaboration and quality. Feel free to edit them to fit the needs of this project.
-* [Template Samples](https://gitlab.com/gitlab-org/gitlab/-/tree/master/.gitlab/issue_templates)
+**Resources** 
+	1. Development team(four people), 10 hours per week for two weeks;
+	2. Test Equipment
 
-
-
-# Templates
-To faciliate your planning and collaboration, issue and merge request templates have been provided for your use.  Go to files/.gitlab.  In that directory you'll find issue_templates and merge_requests_templates subfolders.  Revise the existing md files in those folder, make new ones or delete the existing ones to suit the needs of your project and team.  Then, when you create a new issue or merge request, you'll see the option on the Description dropdown.  
-
-
-![](https://drive.google.com/uc?export=view&id=1p-eHZFYPxKsLuZtEsQPwZuvqpl1KB0bA)
-
-
-
-# Branches
-
-This project templates includes 2 branches to start with.  
-
-| **Name**   | **Description** |
-| ------ | ------ |
-| Master         | Protected branch.  You cannot push directly to master.  This branch should be what you push to your test server (ceclnx for example) or other devices for your client to review. |
-| . . .          | Thereafter, you should follow the code management strategy defined and agreed upon by the team.  I recommend a branch from master for each sprint or interval.  From the sprint-branch, I recommend branching by issue.  Throughout the sprint, rebase your issue branch regularly especially begore a commit.  If an issue is incomplete during the prescribed sprint, commit it to the next spring branch.  This approach gives the master branch an additional degree of protection. |
-
- 
 
