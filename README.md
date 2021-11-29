@@ -1,4 +1,4 @@
-##About our program
+## About our program
 Our program is designed to be able to find human heads in the screen and automatically move the mouse. 
 
 It runs with the following steps and rules:
@@ -7,7 +7,7 @@ It runs with the following steps and rules:
 3. Extract and distinguish the key points (human joints) from the 18 feature maps which the system got from the model.
 4. Automatically move the mouse
 
-##Operation Steps:
+## Operation Steps:
 1. run "keyboardlistener.py"
 2. run "detect.py"
 3. open the picture/video/game
