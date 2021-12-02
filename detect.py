@@ -8,7 +8,7 @@ import pyautogui
 import datetime
 from PIL import ImageGrab
 
-# 设定监听键盘初始状态
+# Set the initial state of the monitor keyboard
 f = open('keylogger.txt', 'w')
 f.write('False')
 f.close()
@@ -18,7 +18,7 @@ g.write('False')
 g.close()
 
 auto = True  # 1. determine if cursor has moved to the position of head
-os.system("mkdir output")  # 创建output目录
+os.system("mkdir output")  # Create output directory
 
 
 def write_out_file(outfilename, frame):
@@ -61,7 +61,7 @@ isSave = False
 while True:
     flag = open('keylogger.txt', 'r').read()
     if flag == 'True':
-        # 自动截屏
+        # Auto screenshot
         im = ImageGrab.grab()
         im.save('path-to-save.png')
         img = cv2.imread(r'path-to-save.png')
@@ -108,7 +108,7 @@ while True:
             if points[idFrom] and points[idTo]:
                 #isSave = True
                 #print('Ok!!!')
-                # 移动鼠标
+                # Move the mouse
                 #pyautogui.moveTo(points[idFrom][0], points[idFrom][1], duration=1 / 60)  # duration表示移动执行时间
                 # print(points[idFrom], points[idTo])
                 cv.line(frame, points[idFrom], points[idTo], (0, 255, 0), 3)
