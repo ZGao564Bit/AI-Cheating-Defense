@@ -25,8 +25,7 @@ There are two of main tasks in our project:
 ## Methods to defend: Operation Steps
 1. TBD
 
-# Project Tasks Assignment
-Project manager: **Zichun Gao**     
+# Project Tasks Assignment    
 **Chang Liu, Yue Sun:** Cheating program development.   
 **Zhenyu Liao:** Backup method to generate adversarial examples.    
 **Zichun Gao:** Generating adversarial examples using FGSM.     
