@@ -15,6 +15,7 @@ interpreter.allocate_tensors()
 #f.write('True')
 #f.close()
 #cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
+isShooting = False
 
 def draw_keypoints(frame, keypoints, confidence_threshold):
     y, x, c = frame.shape
@@ -55,7 +56,7 @@ EDGES = {
 def draw_connections(frame, keypoints, edges, confidence_threshold):
     y, x, c = frame.shape
     shaped = np.squeeze(np.multiply(keypoints, [y, x, 1]))
-
+    global isShooting
 
     for edge, color in edges.items():
         p1, p2 = edge
@@ -69,11 +70,17 @@ def draw_connections(frame, keypoints, edges, confidence_threshold):
                 xm = (x1 + x2) / 2 + 860
                 # pydirectinput.moveTo(int(xm), int(ym), duration=1/30)
                 # pydirectinput.click()
-                pyautogui.moveTo(int(xm), int(ym)-5, duration=1/60)
-                pyautogui.click()
+                pyautogui.moveTo(int(xm), int(ym))
+                if not isShooting:
+                    pyautogui.mouseDown()
+                    isShooting = True
                 #win32api.SetCursorPos((int(xm), int(ym)))
                 #pyautogui.dragTo(int(xm), int(ym), duration=1 / 30)
                 #pyautogui.click()
+            else:
+                pyautogui.mouseUp()
+                isShooting = False
+
 
 
 #name = datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S')

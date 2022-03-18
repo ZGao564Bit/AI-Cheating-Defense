@@ -15,6 +15,7 @@ interpreter.allocate_tensors()
 #f.write('True')
 #f.close()
 #cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
+isOpen = False
 
 def draw_keypoints(frame, keypoints, confidence_threshold):
     y, x, c = frame.shape
@@ -55,7 +56,7 @@ EDGES = {
 def draw_connections(frame, keypoints, edges, confidence_threshold):
     y, x, c = frame.shape
     shaped = np.squeeze(np.multiply(keypoints, [y, x, 1]))
-
+    global isOpen
 
     for edge, color in edges.items():
         p1, p2 = edge
@@ -69,7 +70,13 @@ def draw_connections(frame, keypoints, edges, confidence_threshold):
                 xm = (x1 + x2) / 2 + 860
                 # pydirectinput.moveTo(int(xm), int(ym), duration=1/30)
                 # pydirectinput.click()
-                pyautogui.moveTo(int(xm), int(ym)-5, duration=1/60)
+                pyautogui.dragTo(int(xm), int(ym)-5, duration=1/60)
+                # if isOpen:
+                #     pyautogui.click()
+                #     isOpen = False
+                # else:
+                #     pyautogui.rightClick()
+                #     isOpen = True
                 pyautogui.click()
                 #win32api.SetCursorPos((int(xm), int(ym)))
                 #pyautogui.dragTo(int(xm), int(ym), duration=1 / 30)
@@ -93,11 +100,12 @@ while True:
     #im = ImageGrab.grab()
     #im = ImageGrab.grab((776, 356, 1144, 724))
     im = ImageGrab.grab((860, 440, 1060, 640))
+    #im = ImageGrab.grab((320, 180, 1600, 900))
     im.save('path-to-save.png')
     img = cv2.imread(r'path-to-save.png')
     # print(type(img))
     frame = img
-    img = tf.image.resize_with_pad(np.expand_dims(img, axis=0), 192, 192)
+    img = (np.expand_dims(img, axis=0), 192, 192)
     input_image = tf.cast(img, dtype=tf.float32)
 
     input_details = interpreter.get_input_details()
