@@ -9,18 +9,27 @@ from PIL import Image
 import random
 from scipy.signal import convolve, convolve2d
 
-def add_points(img, y, x, cc):
+def add_points(img, y, x, cc, points):
     im = img.copy()
     conc = cc
+    cy = y
+    cx = x
     while conc >= 0.4:
         print(conc)
-        yc, xc, mc, pos, cd = add_one(im, y, x, conc)
-        if mc >= conc:
+        yc, xc, mc, pos, cd = add_one(im, cy, cx, conc)
+        if mc >= conc or abs(yc-y) > 10 or abs(xc-x) > 10:
             break
         if mc < conc:
+            pl = str([yc, xc])
+            if pl not in points.keys():
+                points[pl] = [0, 0, 0]
+            points[pl][pos] += cd
             px = im[yc][xc][pos]
             im[yc][xc][pos] = px + cd
             conc = mc
+        con = getConfidence(im)
+        cy = int(con[0])
+        cx = int(con[1])
     return im
 
 
@@ -31,90 +40,8 @@ def add_one(img, y, x, cc):
     pos = 0
     cd = 0
     imarr = img.copy()
-    for yc in range(y, y+20):
-        for xc in range(x, x+20):
-            for pid in range(0, 3):
-                px = imarr[yc][xc][pid]
-                if px < 255:
-                    imarr[yc][xc][pid] = px + 1
-                    con = getConfidence(imarr)
-                    confidence = con[2]
-                    if confidence < minc:
-                        minc = confidence
-                        miny = yc
-                        minx = xc
-                        pos = pid
-                        cd = 1
-
-                if px > 0:
-                    imarr[yc][xc][pid] = px - 1
-                    con = getConfidence(imarr)
-                    confidence = con[2]
-                    if confidence < minc:
-                        minc = confidence
-                        miny = yc
-                        minx = xc
-                        pos = pid
-                        cd = -1
-
-                imarr[yc][xc][pid] = px
-
-        for xc in range(x - 1, x - 21):
-            for pid in range(0, 3):
-                px = imarr[yc][xc][pid]
-                if px < 255:
-                    imarr[yc][xc][pid] = px + 1
-                    con = getConfidence(imarr)
-                    confidence = con[2]
-                    if confidence < minc:
-                        minc = confidence
-                        miny = yc
-                        minx = xc
-                        pos = pid
-                        cd = 1
-
-                if px > 0:
-                    imarr[yc][xc][pid] = px - 1
-                    con = getConfidence(imarr)
-                    confidence = con[2]
-                    if confidence < minc:
-                        minc = confidence
-                        miny = yc
-                        minx = xc
-                        pos = pid
-                        cd = -1
-
-                imarr[yc][xc][pid] = px
-
-    for yc in range(y - 1, y - 21):
-        for xc in range(x, x + 20):
-            for pid in range(0, 3):
-                px = imarr[yc][xc][pid]
-                if px < 255:
-                    imarr[yc][xc][pid] = px + 1
-                    con = getConfidence(imarr)
-                    confidence = con[2]
-                    if confidence < minc:
-                        minc = confidence
-                        miny = yc
-                        minx = xc
-                        pos = pid
-                        cd = 1
-
-                if px > 0:
-                    imarr[yc][xc][pid] = px - 1
-                    con = getConfidence(imarr)
-                    confidence = con[2]
-                    if confidence < minc:
-                        minc = confidence
-                        miny = yc
-                        minx = xc
-                        pos = pid
-                        cd = -1
-
-                imarr[yc][xc][pid] = px
-
-        for xc in range(x - 1, x - 21):
+    for yc in range(y-10, y+11):
+        for xc in range(x-10, x+11):
             for pid in range(0, 3):
                 px = imarr[yc][xc][pid]
                 if px < 255:
@@ -166,7 +93,8 @@ interpreter = tf.lite.Interpreter(model_path='lite-model_movenet_singlepose_ligh
 interpreter.allocate_tensors()
 frame = cv2.imread(img_path)
 arr = getConfidence(frame)
-frame = add_points(frame, int(arr[0]), int(arr[1]), arr[2])
+points = {}
+frame = add_points(frame, int(arr[0]), int(arr[1]), arr[2], points)
 con = getConfidence(frame)
 print(con[2])
 
@@ -187,8 +115,11 @@ print(con[2])
 
 
 #frame = gasuss_noise(frame, var=0.01)
-
-
+with open('readme.txt', 'w') as f:
+    for key in points.keys():
+        f.write(str(key))
+        f.write(': ')
+        f.write(str(points[key]))
 
 
 cv2.imshow('Movenet Lightning', frame)
