@@ -17,7 +17,7 @@ def add_points(img, y, x, cc, points):
     while conc >= 0.4:
         print(conc)
         yc, xc, mc, pos, cd = add_one(im, cy, cx, conc)
-        if mc >= conc or abs(yc-y) > 10 or abs(xc-x) > 10:
+        if mc >= conc or abs(cy-y) > 10 or abs(cx-x) > 10:
             break
         if mc < conc:
             pl = str([yc, xc])
