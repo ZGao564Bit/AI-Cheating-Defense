@@ -28,8 +28,8 @@ def add_points(img, y, x, cc, points):
             im[yc][xc][pos] = px + cd
             conc = mc
         con = getConfidence(im)
-        cy = int(con[0])
-        cx = int(con[1])
+        cy = int(con[0][0])
+        cx = int(con[0][1])
     return im
 
 
@@ -40,16 +40,16 @@ def add_one(img, y, x, cc):
     pos = 0
     cd = 0
     imarr = img.copy()
+    cl = confidenceList(imarr)
     for yc in range(y-5, y+6):
         for xc in range(x-5, x+6):
             for pid in range(0, 3):
                 px = imarr[yc][xc][pid]
                 if px < 255:
                     imarr[yc][xc][pid] = px + 1
-                    con = getConfidence(imarr)
-                    confidence = con[2]
-                    if confidence < minc:
-                        minc = confidence
+                    con = confidenceList(imarr)
+                    if isChange(cl, con, minc):
+                        minc = con[0]
                         miny = yc
                         minx = xc
                         pos = pid
@@ -57,10 +57,9 @@ def add_one(img, y, x, cc):
 
                 if px > 0:
                     imarr[yc][xc][pid] = px - 1
-                    con = getConfidence(imarr)
-                    confidence = con[2]
-                    if confidence < minc:
-                        minc = confidence
+                    con = confidenceList(imarr)
+                    if isChange(cl, con, minc):
+                        minc = con[0]
                         miny = yc
                         minx = xc
                         pos = pid
@@ -70,6 +69,20 @@ def add_one(img, y, x, cc):
 
     return miny, minx, minc, pos, cd
 
+def isChange(clist, nlist, minc):
+    for i in range(7):
+        if clist[i] < nlist[i]:
+            return False
+
+    if nlist[0] > minc:
+        return False
+
+    return True
+
+def confidenceList(img):
+    mat = getConfidence(img)
+    clist = [mat[0][2], mat[1][2], mat[2][2], mat[3][2], mat[4][2], mat[5][2], mat[6][2]]
+    return clist
 
 
 def getConfidence(img):
@@ -87,8 +100,9 @@ def getConfidence(img):
     y = fr.shape[0]
     x = fr.shape[1]
     shaped = np.squeeze(np.multiply(keypoints_with_scores, [y, x, 1]))
-    return shaped[6]
-img_path = '4.jpg'
+    return shaped
+
+img_path = '6.jpg'
 interpreter = tf.lite.Interpreter(model_path='lite-model_movenet_singlepose_lightning_3.tflite')
 interpreter.allocate_tensors()
 frame = cv2.imread(img_path)
@@ -124,5 +138,5 @@ with open('temp.txt', 'w') as f:
 
 
 cv2.imshow('Movenet Lightning', frame)
-cv2.imwrite('6.jpg', frame)
+cv2.imwrite('00.jpg', frame)
 cv2.waitKey()
