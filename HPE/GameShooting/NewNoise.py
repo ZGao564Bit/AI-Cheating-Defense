@@ -30,9 +30,9 @@ def add_points(img, y, x, cc, i):
             im[yc][xc][pos] = px + cd
             noise[yc][xc][pos] += cd
             conc = mc
-        con = getConfidence(im)
-        cy = int(con[i][0])
-        cx = int(con[i][1])
+        con = getConfidence(im, i)
+        cy = int(con[0])
+        cx = int(con[1])
     return im
 
 
@@ -43,7 +43,6 @@ def add_one(img, y, x, cc, i):
     pos = 0
     cd = 0
     imarr = img.copy()
-    cl = confidenceList(imarr)
     for yc in range(y-5, y+6):
         for xc in range(x-5, x+6):
             for pid in range(0, 3):
@@ -51,9 +50,10 @@ def add_one(img, y, x, cc, i):
                 ch = noise[yc][xc][pid]
                 if px < 255 and ch < 15:
                     imarr[yc][xc][pid] = px + 1
-                    con = confidenceList(imarr)
-                    if isChange(cl, con, minc, i):
-                        minc = con[i]
+                    con = getConfidence(imarr, i)
+                    confidence = con[2]
+                    if confidence < minc:
+                        minc = confidence
                         miny = yc
                         minx = xc
                         pos = pid
@@ -61,9 +61,10 @@ def add_one(img, y, x, cc, i):
 
                 if px > 0 and ch > -15:
                     imarr[yc][xc][pid] = px - 1
-                    con = confidenceList(imarr)
-                    if isChange(cl, con, minc, i):
-                        minc = con[i]
+                    con = getConfidence(imarr, i)
+                    confidence = con[2]
+                    if confidence < minc:
+                        minc = confidence
                         miny = yc
                         minx = xc
                         pos = pid
@@ -73,24 +74,9 @@ def add_one(img, y, x, cc, i):
 
     return miny, minx, minc, pos, cd
 
-def isChange(clist, nlist, minc, n):
-    for i in range(7):
-        if i != n:
-            if clist[i] < nlist[i] and nlist[i] >= 0.4:
-                return False
-
-    if nlist[n] > minc:
-        return False
-
-    return True
-
-def confidenceList(img):
-    mat = getConfidence(img)
-    clist = [mat[0][2], mat[1][2], mat[2][2], mat[3][2], mat[4][2], mat[5][2], mat[6][2]]
-    return clist
 
 
-def getConfidence(img):
+def getConfidence(img, i):
     im = img.copy()
     fr = im
     im = tf.image.resize_with_pad(np.expand_dims(im, axis=0), 192, 192)
@@ -105,33 +91,24 @@ def getConfidence(img):
     y = fr.shape[0]
     x = fr.shape[1]
     shaped = np.squeeze(np.multiply(keypoints_with_scores, [y, x, 1]))
-    return shaped
-
-img_path = 'xx0.png'
+    return shaped[i]
+img_path = 'test2.png'
 interpreter = tf.lite.Interpreter(model_path='lite-model_movenet_singlepose_lightning_3.tflite')
 interpreter.allocate_tensors()
 frame = cv2.imread(img_path)
-origin = cv2.imread('test2.png')
-arr = getConfidence(frame)
-print(arr)
 points = {}
 noise = []
 for i in range(300):
-    row = []
+    lst = []
     for j in range(300):
-        pix = []
-        for c in range(3):
-            px1 = int(frame[i][j][c])
-            px2 = int(origin[i][j][c])
-            px = px1 - px2
-            pix.append(px)
-        row.append(pix)
-    noise.append(row)
+        pix = [0, 0, 0]
+        lst.append(pix)
+    noise.append(lst)
 for i in range(7):
-    arr = getConfidence(frame)
-    frame = add_points(frame, int(arr[i][0]), int(arr[i][1]), arr[i][2], i)
-    con = getConfidence(frame)
-    print(con)
+    arr = getConfidence(frame, i)
+    frame = add_points(frame, int(arr[0]), int(arr[1]), arr[2], i)
+    con = getConfidence(frame, i)
+    print(con[2])
 
 
 
@@ -152,12 +129,12 @@ for i in range(7):
 #frame = gasuss_noise(frame, var=0.01)
 with open('temp.txt', 'w') as f:
     for key in points.keys():
-        f.write(str(key))
+        f.write(key)
         f.write(': ')
         f.write(str(points[key]))
         f.write('\n')
 
 
 cv2.imshow('Movenet Lightning', frame)
-cv2.imwrite('xx1.png', frame)
+cv2.imwrite('xx0.png', frame)
 cv2.waitKey()
