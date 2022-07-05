@@ -1,13 +1,9 @@
-#This program could detect human gestures using the input from the computer's camera.
-
 import tensorflow as tf
 import numpy as np
 np.set_printoptions(suppress=True)
 from matplotlib import pyplot as plt
 import cv2
-from PIL import Image
-import random
-# from scipy.signal import convolve, convolve2d
+
 def add_points(img, y, x, cc, i):
     global points
     global noise
@@ -189,6 +185,8 @@ def getConfidence1(img, i):
     x = fr.shape[1]
     shaped = np.squeeze(np.multiply(keypoints_with_scores, [y, x, 1]))
     return shaped[i]
+
+
 img_path = 'pubg_02.png'
 interpreter = tf.lite.Interpreter(model_path='../GameShooting/lite-model_movenet_singlepose_lightning_3.tflite')
 interpreter.allocate_tensors()
@@ -213,21 +211,6 @@ for i in range(7):
     print(con)
 
 
-# def gasuss_noise(image, mean=0, var=0.1):
-#     image = np.array(image/255, dtype=float)
-#     noise = np.random.normal(mean, var ** 0.5, image.shape)
-#     out = image + noise
-#     if out.min() < 0:
-#         low_clip = -1.
-#     else:
-#         low_clip = 0.
-#     out = np.clip(out, low_clip, 1.0)
-#     out = np.uint8(out*255)
-#     #cv.imshow("gasuss", out)
-#     return out
-
-
-#frame = gasuss_noise(frame, var=0.01)
 with open('temp_02.txt', 'w') as f:
     for key in points.keys():
         f.write(key)

@@ -5,16 +5,11 @@ import datetime
 from PIL import ImageGrab
 from matplotlib import pyplot as plt
 import cv2
-import win32api
-import pydirectinput
-import keyboard
+
 
 interpreter = tf.lite.Interpreter(model_path='lite-model_movenet_singlepose_lightning_3.tflite')
 interpreter.allocate_tensors()
-#f = open('keylogger.txt', 'w')
-#f.write('True')
-#f.close()
-#cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
+
 
 def draw_keypoints(frame, keypoints, confidence_threshold):
     y, x, c = frame.shape
@@ -22,12 +17,8 @@ def draw_keypoints(frame, keypoints, confidence_threshold):
 
     for kp in shaped:
         ky, kx, kp_conf = kp
-        #print(kp)
         if kp_conf > confidence_threshold:
             cv2.circle(frame, (int(kx), int(ky)), 4, (0, 255, 0), -1)
-        #     print("[" + str(ky) + " " + str(kx) + " " + str(kp_conf) + "]    ok")
-        # else:
-        #     print("[" + str(ky) + " " + str(kx) + " " + str(kp_conf) + "]")
 
 EDGES = {
     (0, 1): 'm',
@@ -67,31 +58,11 @@ def draw_connections(frame, keypoints, edges, confidence_threshold):
             if (p1 == 5 and p2 == 6) or (p1 == 6 and p2 == 5):
                 ym = (y1 + y2) / 2 + 440
                 xm = (x1 + x2) / 2 + 860
-                # pydirectinput.moveTo(int(xm), int(ym), duration=1/30)
-                # pydirectinput.click()
                 pyautogui.moveTo(int(xm), int(ym)-5, duration=1/60)
                 pyautogui.click()
-                #win32api.SetCursorPos((int(xm), int(ym)))
-                #pyautogui.dragTo(int(xm), int(ym), duration=1 / 30)
-                #pyautogui.click()
 
-
-#name = datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
-# get the size of screen and used to adjust
-#fourcc = cv2.VideoWriter_fourcc(*'XVID')
-# = cv2.VideoWriter('test_%s.avi'%name, fourcc, 20, (1920, 1080))
-#video = cv2.VideoWriter('test_%s.avi'%name, fourcc, 5, (640, 480))
-#video = cv2.VideoWriter('test_%s.avi'%name, fourcc, 5, (368, 368))
-#video = cv2.VideoWriter('test_%s.avi'%name, fourcc, 5, (1920, 1080))
-#video = cv2.VideoWriter('test_%s.avi'%name, fourcc, 5, (200, 200))
 
 while True:
-    #if open('keylogger.txt', 'r').read() == 'False':
-        #break
-    # print(line)
-    #im = ImageGrab.grab((640, 300, 1280, 780))
-    #im = ImageGrab.grab()
-    #im = ImageGrab.grab((776, 356, 1144, 724))
     im = ImageGrab.grab((860, 440, 1060, 640))
     im.save('path-to-save.png')
     img = cv2.imread(r'path-to-save.png')
